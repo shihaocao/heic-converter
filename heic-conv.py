@@ -1,5 +1,4 @@
 import glob, os, subprocess
-os.chdir("/home/shihao/Downloads/")
 
 cmd = "heif-convert"
 QUALITY = "-q"
@@ -13,10 +12,11 @@ for file in glob.glob("*.heic"):
     popen.wait()
     output = popen.stdout.read()
     string_output = output.decode("utf-8")
+    print(string_output)
 
     # delete the aux file
     aux_file_name = base_file + "-urn:com:apple:photo:2020:aux:hdrgainmap" + ".jpg"
     os.remove(aux_file_name)
 
-    print(string_output)
+    print(f"Deleting aux file: {aux_file_name}\n")
 
