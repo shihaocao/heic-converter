@@ -4,9 +4,9 @@ cmd = "heif-convert"
 QUALITY = "-q"
 QUALITY_ARG = "99"
 
-for file in glob.glob("*.heic"):
+for file in glob.glob("*.HEIC"):
     base_file = file[:-5]
-    new_file = base_file + ".jpg"
+    new_file = base_file + ".JPG"
     args = [cmd, QUALITY, QUALITY_ARG, file, new_file]
     popen = subprocess.Popen(args, stdout=subprocess.PIPE)
     popen.wait()
@@ -15,7 +15,7 @@ for file in glob.glob("*.heic"):
     print(string_output)
 
     # delete the aux file
-    aux_file_name = base_file + "-urn:com:apple:photo:2020:aux:hdrgainmap" + ".jpg"
+    aux_file_name = base_file + ".HEIC"
     os.remove(aux_file_name)
 
     print(f"Deleting aux file: {aux_file_name}\n")
