@@ -1,10 +1,23 @@
-import glob, os, subprocess
+import os, subprocess
 
 cmd = "heif-convert"
 QUALITY = "-q"
 QUALITY_ARG = "99"
 
-for file in glob.glob("*.HEIC"):
+origs = os.listdir('.')
+heics = os.listdir('.')
+
+i = 0
+
+while i < len(heics):
+    heics[i] = heics[i].lower()
+    if not heics[i].endswith(".heic"):
+        heics.pop(i)
+        origs.pop(i)
+        i -= 1
+    i += 1
+
+for file in origs:
     base_file = file[:-5]
     new_file = base_file + ".JPG"
     args = [cmd, QUALITY, QUALITY_ARG, file, new_file]
