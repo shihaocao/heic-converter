@@ -14,3 +14,9 @@ python3 heic-conv.py
 ```
 
 This will convert all `.heic` files to `.jpg` at 99% quality. Edit the script to dial your desired quality.
+
+Use the optional command line arguments of `--daux` to delete auxiliary files, or `-dorig` to delete the original heic files too.
+
+```
+python3 heic-conv.py --daux --dorig
+```
