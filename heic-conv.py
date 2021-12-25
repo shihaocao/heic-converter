@@ -65,4 +65,4 @@ if __name__ == "__main__":
         convert_and_delete(file, args.daux, args.dorig)
         
     end_time = time.time()
-    print(f'Deleted {len(heics)} heic files in {end_time - start_time} seconds.')
+    print(f'Converted {len(heics)} heic files in {end_time - start_time} seconds.')
