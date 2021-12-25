@@ -24,8 +24,8 @@ python3 heic-conv.py --daux --dorig
 ## Multi-threading
 Use the `--mt` run mode to take advantage of multithreading to convert multiple files at once.
 
-Use the `-worker` optinal argument to specify the number of worker threads. Default is 4.
+Use the `-workers` optinal argument to specify the number of worker threads. Default is 4.
 
 ```
-python3 heic-conv.py --daux --dorig --mt -worker 8
+python3 heic-conv.py --daux --dorig --mt -workers 8
 ```
