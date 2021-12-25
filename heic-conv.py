@@ -1,4 +1,4 @@
-'''A pythons script for batch converting heic files.'''
+'''A python script for batch converting heic files.'''
 
 
 import argparse
@@ -18,6 +18,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--daux", action="store_true", help="Delete aux files")
     parser.add_argument("--dorig", action="store_true", help="Delete original files")
+    parser.add_argument("--mt", action="store_true", help="Run in multi-threaded mode")
+    parser.add_argument("-workers", type=int, default=4, help="Number of workers to use in multi-threaded mode")
     args = parser.parse_args()
     return args
 
@@ -36,7 +38,7 @@ def convert_and_delete(file_name: str, delete_aux: bool = False, delete_orig:boo
 
     # create the new file
     new_file = base_file + ".JPG"
-    args = [CMD, QUALITY, QUALITY_ARG, file, new_file]
+    args = [CMD, QUALITY, QUALITY_ARG, file_name, new_file]
     popen = subprocess.Popen(args, stdout=subprocess.PIPE)
     popen.wait()
     output = popen.stdout.read()
@@ -61,8 +63,16 @@ if __name__ == "__main__":
     heics = find_all_heics()
     print(f'Found {len(heics)} heic files in this directory.')
 
-    for file in heics:
-        convert_and_delete(file, args.daux, args.dorig)
-        
+    if args.mt:
+        print("Running in multi-threaded mode.")
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
+            for heic in heics:
+                executor.submit(convert_and_delete, heic, args.daux, args.dorig)
+
+    else:
+        for file in heics:
+            convert_and_delete(file, args.daux, args.dorig)
+    
     end_time = time.time()
     print(f'Converted {len(heics)} heic files in {end_time - start_time} seconds.')
