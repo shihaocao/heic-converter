@@ -4,6 +4,7 @@
 import argparse
 import os
 import subprocess
+import time
 
 
 CMD = "heif-convert"
@@ -55,9 +56,13 @@ def convert_and_delete(file_name: str, delete_aux: bool = False, delete_orig:boo
         print(f"Deleted original file: {orig_file_name}\n")
 
 if __name__ == "__main__":
+    start_time = time.time()
     args = parse_args()
     heics = find_all_heics()
     print(f'Found {len(heics)} heic files in this directory.')
 
     for file in heics:
         convert_and_delete(file, args.daux, args.dorig)
+        
+    end_time = time.time()
+    print(f'Deleted {len(heics)} heic files in {end_time - start_time} seconds.')
